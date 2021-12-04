@@ -2,9 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "Server part of k30 banking app",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "set NODE_ENV=development && nodemon server.js",
+    "start": "node server.js"
   },
   "author": "Hamza Sehouli",
   "license": "ISC",
