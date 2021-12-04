@@ -74,15 +74,15 @@ const userSchema = new mongoose.Schema(
       type: Date,
       defaul: Date.now(),
     },
-    iban: {
-      type: String,
-      required: [true, "iban is required"],
-    },
-    currentBalance: {
-      type: Number,
+    account: {
+      type: mongoose.Schema.ObjectId,
     },
     cards: {
       type: [mongoose.Schema.ObjectId],
+    },
+    active: {
+      type: Boolean,
+      default: true,
     },
   },
   {
