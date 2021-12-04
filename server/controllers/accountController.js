@@ -1,24 +1,24 @@
-const User = require("../models/userModel);
-exports.getAllUsers = async function (req, res, next) {
+const Account = require("../models/accountModel");
+exports.getAllAccounts = async function (req, res, next) {
   try {
-    const users = await User.find();
+    const accounts = await User.find();
     req.status(200).json({
       status: "success",
       data: {
-        users,
+        accounts,
       },
     });
   } catch (err) {
     console.log("error");
   }
 };
-exports.createUser = async function (req, res, next) {
+exports.addAccount = async function (req, res, next) {
   try {
-    const users = await User.find();
+    const accounts = await User.find();
     req.status(200).json({
       status: "success",
       data: {
-        users,
+        accounts,
       },
     });
   } catch (err) {

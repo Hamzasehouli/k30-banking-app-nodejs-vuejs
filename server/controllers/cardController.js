@@ -1,24 +1,24 @@
-const User = require("../models/userModel);
-exports.getAllUsers = async function (req, res, next) {
+const Card = require("../models/cardModel");
+exports.getAllCrds = async function (req, res, next) {
   try {
-    const users = await User.find();
+    const cards = await User.find();
     req.status(200).json({
       status: "success",
       data: {
-        users,
+        cards,
       },
     });
   } catch (err) {
     console.log("error");
   }
 };
-exports.createUser = async function (req, res, next) {
+exports.createCard = async function (req, res, next) {
   try {
-    const users = await User.find();
+    const cards = await User.find();
     req.status(200).json({
       status: "success",
       data: {
-        users,
+        cards,
       },
     });
   } catch (err) {
