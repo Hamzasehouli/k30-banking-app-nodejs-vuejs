@@ -75,10 +75,10 @@ const userSchema = new mongoose.Schema(
       defaul: Date.now(),
     },
     account: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.ObjectId,
     },
     cards: {
-      type: [mongoose.Schema.ObjectId],
+      type: [mongoose.ObjectId],
     },
     active: {
       type: Boolean,

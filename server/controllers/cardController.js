@@ -1,5 +1,5 @@
 const Card = require("../models/cardModel");
-exports.getAllCrds = async function (req, res, next) {
+exports.getAllCards = async function (req, res, next) {
   try {
     const cards = await User.find();
     req.status(200).json({
@@ -12,7 +12,7 @@ exports.getAllCrds = async function (req, res, next) {
     console.log("error");
   }
 };
-exports.createCard = async function (req, res, next) {
+exports.addCard = async function (req, res, next) {
   try {
     const cards = await User.find();
     req.status(200).json({

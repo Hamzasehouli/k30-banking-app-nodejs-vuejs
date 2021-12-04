@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 accountSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.ObjectId, required: true },
+    user: { type: mongoose.ObjectId, required: true },
     iban: { type: String, required: true },
     balance: {
       type: Number,
@@ -10,6 +10,18 @@ accountSchema = new mongoose.Schema(
     createdAt: {
       type: Date,
       default: Date.now(),
+    },
+    bic: {
+      type: String,
+      required: true,
+    },
+    active: {
+      type: Boolean,
+      default: false,
+    },
+    expiration: {
+      type: Date,
+      required: true,
     },
   },
   {
