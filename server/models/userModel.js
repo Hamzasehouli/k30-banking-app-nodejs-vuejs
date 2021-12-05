@@ -24,11 +24,12 @@ const userSchema = new mongoose.Schema(
     },
     pin: {
       type: Number,
-      required: [true, "Please neter a four digits pin number"],
+      // required: [true, "Please neter a four digits pin number"],
     },
     role: {
       type: String,
       enum: ["admin", "user"],
+      default: "user",
     },
     dateOfBirth: {
       type: Date,
@@ -46,9 +47,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter your mobile phone number"],
     },
-    adresse: {
+    street: {
       type: String,
-      required: [true, "Please enter your adresse"],
+      required: [true, "Please enter your street"],
     },
     houseNumber: {
       type: Number,
@@ -72,7 +73,7 @@ const userSchema = new mongoose.Schema(
     },
     createdAt: {
       type: Date,
-      defaul: Date.now(),
+      default: Date.now(),
     },
     account: {
       type: mongoose.ObjectId,
@@ -82,7 +83,11 @@ const userSchema = new mongoose.Schema(
     },
     active: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+    confirmed: {
+      type: Boolean,
+      default: false,
     },
   },
   {
