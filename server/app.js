@@ -1,3 +1,5 @@
+const path = require('path');
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const morgan = require('morgan');
 const userRouter = require('./routes/userRouter.js');
@@ -8,6 +10,9 @@ const authRouter = require('./routes/authRouter.js');
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
+
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.use(morgan('tiny'));
 

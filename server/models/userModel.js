@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const handleJwt = require('../handlers/handleJwt');
 
 const validateNames = function (val) {
   if (val && isNaN(Number(val.trim())) && val.trim() !== '') {
@@ -131,7 +132,12 @@ const sendError = function (next, val) {
   next(`Please enter your ${val}`);
 };
 
-const validatePassword = function (next, that, password, confirmPassword) {
+const validatePassword = async function (
+  next,
+  that,
+  password,
+  confirmPassword
+) {
   if (
     password.trim().length < 8 ||
     password.trim().length > 10 ||
@@ -143,11 +149,12 @@ const validatePassword = function (next, that, password, confirmPassword) {
     return next('not equal');
   }
   if (that.isModified(that.password)) {
-    bcrypt.hash(password, 12, function (err, hash) {
+    bcrypt.hash(password, 12, async function (err, hash) {
       if (err) return;
 
       that.password = hash;
       that.confirmPassword = undefined;
+
       next();
     });
   }
@@ -178,7 +185,7 @@ userSchema.pre('save', function (next) {
 
 userSchema.statics.loginHandler = function (inputData) {
   const { email, password } = inputData;
-  console.log(email);
+
   if (
     !email.trim() ||
     !email.trim().includes('@') ||

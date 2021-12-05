@@ -1,4 +1,6 @@
 const User = require('../models/userModel');
+const handleJwt = require('../handlers/handleJwt');
+const jwt = require('jsonwebtoken');
 
 exports.signup = async function (req, res, next) {
   try {
@@ -20,12 +22,13 @@ exports.signup = async function (req, res, next) {
       dateOfBirth: req.body.dateOfBirth,
     };
     const user = await User.create(inputData);
-    res.status(201).json({
-      status: 'success',
-      data: {
-        user,
-      },
-    });
+    handleJwt.generateToken(res, user, process.env.JWT_EXP);
+    // res.status(201).json({
+    //   status: 'success',
+    //   data: {
+    //     user,
+    //   },
+    // });
   } catch (err) {
     console.log(err);
   }
@@ -42,17 +45,25 @@ exports.login = async function (req, res, next) {
     const user = await User.findOne({ email: inputData.email });
     const isPasswordCorrect = await user.checkPassword(inputData.password);
     if (!isPasswordCorrect) throw 'something went wrong';
-
-    res.status(200).json({
-      status: 'success',
-      data: {
-        user,
-      },
-    });
+    handleJwt.generateToken(res, user, process.env.JWT_EXP);
   } catch (err) {
     res.status(400).json({
       status: 'fail',
       message: err,
     });
   }
+};
+
+exports.isLoggedin = async function (req, res, next) {
+  const token = req.cookies.jwt;
+  jwt.verify(token, process.env.JWT_SECRET_KEY, async function (err, decoded) {
+    const user = await User.findById(decoded.id);
+    console.log(user); // bar
+  });
+};
+
+exports.protect = (...roles) => {
+  return () => {
+    console.log(roles);
+  };
 };
