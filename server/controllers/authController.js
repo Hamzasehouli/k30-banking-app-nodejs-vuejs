@@ -36,10 +36,13 @@ exports.login = async function (req, res, next) {
     const inputData = {
       email: req.body.email,
       password: req.body.password,
-      confirmPassword: req.body.confirmPassword,
     };
+    User.loginHandler(inputData);
 
     const user = await User.findOne({ email: inputData.email });
+    const isPasswordCorrect = await user.checkPassword(inputData.password);
+    if (!isPasswordCorrect) throw 'something went wrong';
+
     res.status(200).json({
       status: 'success',
       data: {
@@ -49,7 +52,7 @@ exports.login = async function (req, res, next) {
   } catch (err) {
     res.status(400).json({
       status: 'fail',
-      message: 'Failed to login',
+      message: err,
     });
   }
 };

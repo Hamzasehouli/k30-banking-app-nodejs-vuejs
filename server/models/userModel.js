@@ -176,6 +176,32 @@ userSchema.pre('save', function (next) {
     : validatePassword(next, this, this.password, this.confirmPassword);
 });
 
+userSchema.statics.loginHandler = function (inputData) {
+  const { email, password } = inputData;
+  console.log(email);
+  if (
+    !email.trim() ||
+    !email.trim().includes('@') ||
+    !email.trim().split('@')[1].includes('.')
+  ) {
+    console.log('Please enter a a valid email to login');
+    next('Please enter a a valid email to login');
+    return;
+  }
+};
+
+userSchema.methods.checkPassword = async function (password) {
+  if (
+    !password.trim() ||
+    password.trim().length < 8 ||
+    password.trim().length > 10
+  ) {
+    return false;
+  }
+
+  return await bcrypt.compare(password, this.password);
+};
+
 const User = new mongoose.model('User', userSchema);
 
 module.exports = User;
